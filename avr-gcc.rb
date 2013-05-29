@@ -9,7 +9,7 @@ end
 
 class AvrGcc < Formula
   homepage 'http://gcc.gnu.org'
-  url 'http://ftp.gnu.org/gnu/gcc/gcc-4.7.2/gcc-4.7.2.tar.bz2'
+  url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.0/gcc-4.8.0.tar.bz2'
   sha1 'a464ba0f26eef24c29bcd1e7489421117fb9ee35'
 
   depends_on 'larsimmisch/avr/avr-binutils'
