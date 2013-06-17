@@ -1,9 +1,5 @@
 require 'formula'
 
-def nocxx?
-  ARGV.include? '--disable-cxx'
-end
-
 # print avr-gcc's builtin include paths
 # `avr-gcc -print-prog-name=cc1plus` -v
 
@@ -16,12 +12,6 @@ class AvrGcc < Formula
   depends_on 'gmp'
   depends_on 'libmpc'
   depends_on 'mpfr'
-
-  def options
-    [
-     ['--disable-cxx', 'Don\'t build the g++ compiler'],
-    ]
-  end
 
   # Dont strip compilers.
   skip_clean :all
@@ -61,9 +51,8 @@ class AvrGcc < Formula
             "--with-as=/usr/local/bin/avr-as"
            ]
 
-    # The C compiler is always built, C++ can be disabled
-    languages = %w[c]
-    languages << 'c++' unless nocxx?
+    # The C & C++ compiler are always both built.
+    languages = %w[c c++]
 
     Dir.mkdir 'build'
     Dir.chdir 'build' do
