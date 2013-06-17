@@ -7,7 +7,7 @@ AVR is a popular family of microcontrollers, used for example in the [Arduino](h
 	
 Current Versions
 ----------------
-- gcc 4.7.2
+- gcc 4.8.1
 - binutils 2.23.1
 - avr-libc 1.8.0
 
@@ -15,7 +15,7 @@ Dependencies: 'gmp', 'libmpc', 'mpfr' will be installed with gcc.
 
 Installing Homebrew-avr Formulae
 --------------------------------
-Just `brew tap larsimmisch/avr` and then `brew install <formula>`.
+Just `brew tap WeAreLeka/avr` and then `brew install <formula>`.
 
 To install the entire AVR toolchain, do:
 `brew install avr-libc`
