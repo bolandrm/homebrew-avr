@@ -6,7 +6,7 @@ require 'formula'
 class AvrGcc < Formula
   homepage 'http://gcc.gnu.org'
   url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.1/gcc-4.8.1.tar.bz2'
-  sha1 ''
+  sha1 '1288994fb42671a0af5432bc850482f8ac3ab551'
 
   depends_on 'larsimmisch/avr/avr-binutils'
   depends_on 'gmp'
