@@ -12,6 +12,7 @@ class AvrGcc < Formula
   depends_on 'gmp'
   depends_on 'libmpc'
   depends_on 'mpfr'
+  depends_on 'avrdude'
 
   # Dont strip compilers.
   skip_clean :all
