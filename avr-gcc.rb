@@ -14,9 +14,6 @@ class AvrGcc < Formula
   depends_on 'mpfr'
   depends_on 'avrdude'
 
-  # Dont strip compilers.
-  skip_clean :all
-
   def install
     gmp = Formula.factory 'gmp'
     mpfr = Formula.factory 'mpfr'
