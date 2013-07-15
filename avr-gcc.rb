@@ -18,6 +18,7 @@ class AvrGcc < Formula
     gmp = Formula.factory 'gmp'
     mpfr = Formula.factory 'mpfr'
     libmpc = Formula.factory 'libmpc'
+    avrdude = Formula.factory 'avrdude'
 
     # brew's build environment is in our way
     ENV.delete 'CFLAGS'
