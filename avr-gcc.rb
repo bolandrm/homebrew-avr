@@ -47,7 +47,8 @@ class AvrGcc < Formula
             # ...and the binaries...
             "--bindir=#{bin}",
             # This shouldn't be necessary
-            "--with-as=/usr/local/bin/avr-as"
+            "--with-as=/usr/local/bin/avr-as",
+            "--with-ld=/usr/local/bin/avr-ld"
            ]
 
     # The C & C++ compiler are always both built.
@@ -63,7 +64,7 @@ class AvrGcc < Formula
 
       system 'make install'
 
-      multios = `gcc --print-multi-os-dir`.chomp
+      multios = `gcc --print-multi-os-directory`.chomp
 
       # binutils already has a libiberty.a. We remove ours, because
       # otherwise, the symlinking of the keg fails
