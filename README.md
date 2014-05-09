@@ -1,37 +1,38 @@
 Homebrew-avr
 ============
-This repository contains the GNU AVR toolchain as formulae for [Homebrew](https://github.com/mxcl/homebrew).
 
-AVR is a popular family of microcontrollers, used for example in the [Arduino](http://arduino.cc) project.
+This repository contains the GNU AVR toolchain as formulae for
+[Homebrew][].
 
-	
+AVR is a popular family of microcontrollers, used for example in the
+[Arduino][] project.
+
 Current Versions
 ----------------
-- gcc 4.8.1
-- binutils 2.23.1
-- avr-libc 1.8.0
 
-Dependencies: 'gmp', 'libmpc', 'mpfr' will be installed with gcc.
+-   `avr-gcc 4.8.2`
+-   `binutils 2.24`
+-   `avr-libc 1.8.0`
+-   `avrdude 6.1`
+
+Dependencies: `gmp`, `libmpc`, `mpfr` will be installed with `avr-gcc`.
 
 Installing Homebrew-avr Formulae
 --------------------------------
-Just `brew tap WeAreLeka/avr` and then `brew install <formula>`.
 
-To install the entire AVR toolchain, do:
-`brew install avr-libc`
+To install the entire AVR toolchain, you only need to:
 
-This will pull in the prerequisites avr-binutils and avr-gcc.
-
-You can also install via URL:
-
+``` {.shell}
+$ brew tap WeAreLeka/avr && brew install avr-libc
 ```
-brew install https://raw.github.com/larsimmisch/homebrew-avr/master/<formula>.rb
-```
+
+This will pull in the prerequisites `avr-binutils` and `avr-gcc`.
 
 Docs
 ----
+
 `brew help`, `man brew`, or the Homebrew [wiki][].
 
-[wiki]:http://wiki.github.com/mxcl/homebrew
-[homebrew-dupes]:https://github.com/Homebrew/homebrew-dupes
-[homebrew-versions]:https://github.com/Homebrew/homebrew-versions
+  [Homebrew]: https://github.com/mxcl/homebrew
+  [Arduino]: http://arduino.cc
+  [wiki]: http://wiki.github.com/mxcl/homebrew
