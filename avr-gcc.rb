@@ -4,72 +4,74 @@ require 'formula'
 # `avr-gcc -print-prog-name=cc1plus` -v
 
 class AvrGcc < Formula
-  homepage 'http://gcc.gnu.org'
-  url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
-  sha1 '810fb70bd721e1d9f446b6503afe0a9088b62986'
+	homepage 'http://gcc.gnu.org'
+	url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
+	sha1 '810fb70bd721e1d9f446b6503afe0a9088b62986'
 
-  depends_on 'WeAreLeka/avr/avr-binutils'
-  depends_on 'gmp'
-  depends_on 'libmpc'
-  depends_on 'mpfr'
-  depends_on 'avrdude'
+	depends_on 'gmp'
+	depends_on 'libmpc'
+	depends_on 'mpfr'
+	depends_on 'avrdude'
+	depends_on 'WeAreLeka/avr/avr-binutils'
 
-  def install
-    gmp = Formula.factory 'gmp'
-    mpfr = Formula.factory 'mpfr'
-    libmpc = Formula.factory 'libmpc'
-    avrdude = Formula.factory 'avrdude'
+	def install
 
-    # brew's build environment is in our way
-    ENV.delete 'CFLAGS'
-    ENV.delete 'CXXFLAGS'
-    ENV.delete 'AS'
-    ENV.delete 'LD'
-    ENV.delete 'NM'
-    ENV.delete 'RANLIB'
+		gmp = Formula.factory 'gmp'
+		mpfr = Formula.factory 'mpfr'
+		libmpc = Formula.factory 'libmpc'
+		avrdude = Formula.factory 'avrdude'
+		avr_binutils = Formula.factory('WeAreLeka/avr/avr-binutils')
 
-    if MacOS.lion?
-      ENV['CC'] = 'llvm-gcc'
-    end
+		# brew's build environment is in our way
+		ENV.delete 'CFLAGS'
+		ENV.delete 'CXXFLAGS'
+		ENV.delete 'AS'
+		ENV.delete 'LD'
+		ENV.delete 'NM'
+		ENV.delete 'RANLIB'
 
-    args = [
-            "--target=avr",
-            "--disable-libssp",
-            "--disable-nls",
-            "--with-dwarf2",
-            # Sandbox everything...
-            "--prefix=#{prefix}",
-            "--with-gmp=#{gmp.prefix}",
-            "--with-mpfr=#{mpfr.prefix}",
-            "--with-mpc=#{libmpc.prefix}",
-            # ...except the stuff in share...
-            "--datarootdir=#{share}",
-            # ...and the binaries...
-            "--bindir=#{bin}",
-            # This shouldn't be necessary
-            "--with-as=/usr/local/bin/avr-as",
-            "--with-ld=/usr/local/bin/avr-ld"
-           ]
+		if MacOS.lion?
+			ENV['CC'] = 'llvm-gcc'
+		end
 
-    # The C & C++ compiler are always both built.
-    languages = %w[c c++]
+		args = [
+			"--target=avr",
+			"--disable-libssp",
+			"--disable-nls",
+			"--with-dwarf2",
+			# Sandbox everything...
+			"--prefix=#{prefix}",
+			"--with-gmp=#{gmp.prefix}",
+			"--with-mpfr=#{mpfr.prefix}",
+			"--with-mpc=#{libmpc.prefix}",
+			# ...except the stuff in share...
+			"--datarootdir=#{share}",
+			# ...and the binaries...
+			"--bindir=#{bin}",
+			# This shouldn't be necessary
+			"--with-as=/usr/local/bin/avr-as",
+				"--with-ld=/usr/local/bin/avr-ld"
+		]
 
-    Dir.mkdir 'build'
-    Dir.chdir 'build' do
-      system '../configure', "--enable-languages=#{languages.join(',')}", *args
-      system 'make'
+		# The C & C++ compiler are always both built.
+		languages = %w[c c++]
 
-      # At this point `make check` could be invoked to run the testsuite. The
-      # deja-gnu and autogen formulae must be installed in order to do this.
+		Dir.mkdir 'build'
+		Dir.chdir 'build' do
+			system '../configure', "--enable-languages=#{languages.join(',')}", *args
+			system 'make'
 
-      system 'make install'
+			# At this point `make check` could be invoked to run the testsuite. The
+			# deja-gnu and autogen formulae must be installed in order to do this.
 
-      multios = `gcc --print-multi-os-directory`.chomp
+			system 'make install'
 
-      # binutils already has a libiberty.a. We remove ours, because
-      # otherwise, the symlinking of the keg fails
-      File.unlink "#{prefix}/lib/#{multios}/libiberty.a"
+			multios = `gcc --print-multi-os-directory`.chomp
 
-    end
-  end
+			# binutils already has a libiberty.a. We remove ours, because
+			# otherwise, the symlinking of the keg fails
+			File.unlink "#{prefix}/lib/#{multios}/libiberty.a"
+
+		end
+	end
 end
