@@ -22,7 +22,7 @@ Just `brew tap WeAreLeka/avr` and then `brew install <formula>`.
 To install the entire AVR toolchain, do:
 
 ```Bash
-$ brew install avr-libc`
+$ brew install avr-libc
 ```
 
 This will pull in the prerequisites `avr-binutils` and `avr-gcc`.
