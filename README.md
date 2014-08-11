@@ -9,18 +9,23 @@ AVR is a popular family of microcontrollers, used for example in the
 
 Current Versions
 ----------------
-- gcc 4.9.1
-- binutils 2.24.0
-- avr-libc 1.8.0
+
+- `gcc 4.9.1`
+- `binutils 2.24.0`
+- `avr-libc 1.8.0`
 
 Installing Homebrew-avr Formulae
 --------------------------------
-Just `brew tap plietar/avr` and then `brew install <formula>`.
+
+Just `brew tap WeAreLeka/avr` and then `brew install <formula>`.
 
 To install the entire AVR toolchain, do:
-`brew install avr-libc`
 
-This will pull in the prerequisites avr-binutils and avr-gcc.
+```Bash
+$ brew install avr-libc`
+```
+
+This will pull in the prerequisites `avr-binutils` and `avr-gcc`.
 
 Docs
 ----
