@@ -4,74 +4,62 @@ require 'formula'
 # `avr-gcc -print-prog-name=cc1plus` -v
 
 class AvrGcc < Formula
-	homepage 'http://gcc.gnu.org'
-	url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.2/gcc-4.8.2.tar.bz2'
-	sha1 '810fb70bd721e1d9f446b6503afe0a9088b62986'
+	homepage 'http://www.gnu.org/software/gcc/gcc.html'
+	url 'http://ftpmirror.gnu.org/gcc/gcc-4.9.1/gcc-4.9.1.tar.bz2'
+	mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.1/gcc-4.9.1.tar.bz2'
+	sha1 '3f303f403053f0ce79530dae832811ecef91197e'
 
 	depends_on 'gmp'
 	depends_on 'libmpc'
 	depends_on 'mpfr'
-	depends_on 'avrdude'
-	depends_on 'WeAreLeka/avr/avr-binutils'
+	depends_on 'cloog'
+	depends_on 'isl'
+
+	depends_on 'avr-binutils'
+
+	option 'disable-cxx', 'Don\'t build the g++ compiler'
 
 	def install
-
-		gmp = Formula.factory 'gmp'
-		mpfr = Formula.factory 'mpfr'
-		libmpc = Formula.factory 'libmpc'
-		avrdude = Formula.factory 'avrdude'
-		avr_binutils = Formula.factory('WeAreLeka/avr/avr-binutils')
-
-		# brew's build environment is in our way
-		ENV.delete 'CFLAGS'
-		ENV.delete 'CXXFLAGS'
-		ENV.delete 'AS'
-		ENV.delete 'LD'
-		ENV.delete 'NM'
-		ENV.delete 'RANLIB'
-
-		if MacOS.lion?
-			ENV['CC'] = 'llvm-gcc'
-		end
+		# The C compiler is always built, C++ can be disabled
+		languages = %w[c]
+		languages << 'c++' unless build.include? 'disable-cxx'
 
 		args = [
 			"--target=avr",
-			"--disable-libssp",
-			"--disable-nls",
-			"--with-dwarf2",
-			# Sandbox everything...
 			"--prefix=#{prefix}",
-			"--with-gmp=#{gmp.prefix}",
-			"--with-mpfr=#{mpfr.prefix}",
-			"--with-mpc=#{libmpc.prefix}",
-			# ...except the stuff in share...
-			"--datarootdir=#{share}",
-			# ...and the binaries...
-			"--bindir=#{bin}",
-			# This shouldn't be necessary
-			"--with-as=/usr/local/bin/avr-as",
-				"--with-ld=/usr/local/bin/avr-ld"
+
+			"--enable-languages=#{languages.join(',')}",
+			"--with-gnu-as",
+			"--with-gnu-ld",
+			"--with-ld=#{Formula["avr-binutils"].opt_bin/'avr-ld'}",
+			"--with-as=#{Formula["avr-binutils"].opt_bin/'avr-as'}",
+
+			"--disable-nls",
+			"--disable-shared",
+			"--disable-threads",
+			"--disable-libssp",
+			"--disable-libstdcxx-pch",
+			"--disable-libgomp",
+
+			"--with-gmp=#{Formula["gmp"].opt_prefix}",
+			"--with-mpfr=#{Formula["mpfr"].opt_prefix}",
+			"--with-mpc=#{Formula["libmpc"].opt_prefix}",
+			"--with-cloog=#{Formula["cloog"].opt_prefix}",
+			"--with-isl=#{Formula["isl"].opt_prefix}",
+			"--with-system-zlib"
 		]
 
-		# The C & C++ compiler are always both built.
-		languages = %w[c c++]
+		mkdir 'build' do
+			system "../configure", *args
+			system "make"
 
-		Dir.mkdir 'build'
-		Dir.chdir 'build' do
-			system '../configure', "--enable-languages=#{languages.join(',')}", *args
-			system 'make'
-
-			# At this point `make check` could be invoked to run the testsuite. The
-			# deja-gnu and autogen formulae must be installed in order to do this.
-
-			system 'make install'
-
-			multios = `gcc --print-multi-os-directory`.chomp
-
-			# binutils already has a libiberty.a. We remove ours, because
-			# otherwise, the symlinking of the keg fails
-			File.unlink "#{prefix}/lib/#{multios}/libiberty.a"
-
+			ENV.deparallelize
+			system "make install"
 		end
+
+		# info and man7 files conflict with native gcc
+		info.rmtree
+		man7.rmtree
 	end
 end
+
