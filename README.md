@@ -12,7 +12,7 @@ Current Versions
 
 - `gcc 4.9.1`
 - `binutils 2.24.0`
-- `avr-libc 1.8.0`
+- `avr-libc 1.8.1`
 
 Installing Homebrew-avr Formulae
 --------------------------------
@@ -32,6 +32,17 @@ Docs
 
 `brew help`, `man brew`, or the Homebrew [wiki][].
 
-  [Homebrew]: https://github.com/mxcl/homebrew
-  [Arduino]: http://arduino.cc
-  [wiki]: http://wiki.github.com/mxcl/homebrew
+Thanks
+------
+
+This repository is based on the works of:
+
+- [larsimmisch](https://github.com/larsimmisch/homebrew-avr)
+- [plietar](https://github.com/plietar/homebrew-avr/)
+- [0xPIT](https://github.com/0xPIT/homebrew-avr)
+
+
+[Homebrew]: https://github.com/mxcl/homebrew
+[Arduino]: http://arduino.cc
+[wiki]: http://wiki.github.com/mxcl/homebrew
+
