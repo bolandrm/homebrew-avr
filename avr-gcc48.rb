@@ -17,7 +17,7 @@ class AvrGcc48 < Formula
 	depends_on 'cloog'
 	depends_on 'isl'
 
-	depends_on 'avr-binutils48'
+	depends_on 'avr-binutils'
 
 	option 'disable-cxx', 'Don\'t build the g++ compiler'
 
@@ -33,8 +33,8 @@ class AvrGcc48 < Formula
 			"--enable-languages=#{languages.join(',')}",
 			"--with-gnu-as",
 			"--with-gnu-ld",
-			"--with-ld=#{Formula["avr-binutils48"].opt_bin/'avr-ld'}",
-			"--with-as=#{Formula["avr-binutils48"].opt_bin/'avr-as'}",
+			"--with-ld=#{Formula["avr-binutils"].opt_bin/'avr-ld'}",
+			"--with-as=#{Formula["avr-binutils"].opt_bin/'avr-as'}",
 
 			"--disable-nls",
 			"--disable-shared",
