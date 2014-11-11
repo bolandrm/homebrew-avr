@@ -10,9 +10,9 @@ class AvrGcc48 < Formula
 	mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.bz2'
 	sha256 '6a8e4f11b185f4fe2ed9d7fc053e80f8c7e73f800c045f51f9d8bea33f080f1e'
 
-	avr_gcc_version = "4.8.3"
+	keg_only "You are about to compile avr-libc #{version} with an older version of avr-gcc, i.e. avr-gcc #{Formula["avr-gcc48"].version}. Please refer to the Caveats section for more information."
 
-	keg_only "\nYou are about to install an older version of avr-gcc, i.e. version #{avr_gcc_version}. \nThis formula will not be linked to /usr/loca/bin in order to avoid conflicts with the default/latest version of avr-gcc, i.e. version 4.9. \nUnless you know what you\'re doing, it is recommended to use avr-gcc 4.9. \nTo use avr-gcc 4.8, unlink all the binaries related to other versions of avr-gcc before linking this one. #{Formula["avr-gcc"].avr_gcc_version}"
+	keg_only "You are about to compile an older version of avr-gcc, i.e. avr-gcc #{version}. Please refer to the Caveats section for more information."
 
 	depends_on 'gmp'
 	depends_on 'libmpc'
@@ -66,5 +66,37 @@ class AvrGcc48 < Formula
 		info.rmtree
 		man7.rmtree
 	end
+
+	def caveats
+
+		s = <<-EOS.undent
+You are about to compile an older version of avr-gcc, i.e. avr-gcc #{version}.
+
+This formula will not be linked to #{HOMEBREW_PREFIX}/bin in order to avoid conflicts with the default/latest version of avr-gcc, eg. avr-gcc #{Formula["avr-gcc"].version}.
+
+Unless you know what you are doing, it is recommended to use avr-gcc #{Formula["avr-gcc"].version}. Simply run the following:
+
+	$ brew install avr-libc
+
+To use avr-gcc #{Formula["avr-gcc48"].version}, unlink all the binaries related to other versions of avr-libc before linking this one.
+
+	# unlink the latest/default avr-gcc #{Formula["avr-gcc"].version}
+	$ brew unlink avr-libc avr-gcc
+	
+	# or for an older version of avr-gcc XX
+	$ brew unlink avr-libcXX avr-gccXX
+
+	# and then link avr-gcc #{Formula["avr-gcc48"].version}
+	$ brew link avr-gcc48 avr-libc48
+
+Please visite our Github repository for futher information or to report a bug.
+
+	http://github.com/weareleka/homebrew-avr
+EOS
+
+		s
+
+	end
+
 end
 
