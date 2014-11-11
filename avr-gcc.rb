@@ -4,10 +4,13 @@ require 'formula'
 # `avr-gcc -print-prog-name=cc1plus` -v
 
 class AvrGcc < Formula
+
 	homepage 'http://www.gnu.org/software/gcc/gcc.html'
 	url 'http://gnu.cardse.net/gcc/gcc-4.9.2/gcc-4.9.2.tar.bz2'
 	mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.9.2/gcc-4.9.2.tar.bz2'
 	sha256 '2020c98295856aa13fda0f2f3a4794490757fc24bcca918d52cc8b4917b972dd'
+
+	avr_gcc_version = "4.9.2"
 
 	depends_on 'gmp'
 	depends_on 'libmpc'

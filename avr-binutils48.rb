@@ -1,6 +1,7 @@
 require 'formula'
 
 class AvrBinutils48 < Formula
+
 	homepage 'http://www.gnu.org/software/binutils/binutils.html'
 	url 'http://ftpmirror.gnu.org/binutils/binutils-2.24.tar.gz'
 	mirror 'http://ftp.gnu.org/gnu/binutils/binutils-2.24.tar.gz'

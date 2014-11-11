@@ -4,12 +4,15 @@ require 'formula'
 # `avr-gcc -print-prog-name=cc1plus` -v
 
 class AvrGcc48 < Formula
+
 	homepage 'http://www.gnu.org/software/gcc/gcc.html'
 	url 'http://ftp.gnu.org/gnu/gcc/gcc-4.8.3/gcc-4.8.3.tar.bz2'
 	mirror 'ftp://gcc.gnu.org/pub/gcc/releases/gcc-4.8.3/gcc-4.8.3.tar.bz2'
 	sha256 '6a8e4f11b185f4fe2ed9d7fc053e80f8c7e73f800c045f51f9d8bea33f080f1e'
 
-	keg_only 'This formula was not linked to /usr/loca/bin to avoid conflicts with the default avr-gcc used with avr-gcc 4.9. To use avr-gcc 4.8, unlink all the binaries related to avr-gcc 4.9 before linking this one.'
+	avr_gcc_version = "4.8.3"
+
+	keg_only "\nYou are about to install an older version of avr-gcc, i.e. version #{avr_gcc_version}. \nThis formula will not be linked to /usr/loca/bin in order to avoid conflicts with the default/latest version of avr-gcc, i.e. version 4.9. \nUnless you know what you\'re doing, it is recommended to use avr-gcc 4.9. \nTo use avr-gcc 4.8, unlink all the binaries related to other versions of avr-gcc before linking this one. #{Formula["avr-gcc"].avr_gcc_version}"
 
 	depends_on 'gmp'
 	depends_on 'libmpc'
