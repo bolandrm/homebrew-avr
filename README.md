@@ -1,7 +1,7 @@
-Homebrew-avr
+homebrew-avr
 ============
 
-This repository contains the GNU AVR toolchain as formulae for
+This repository contains the GNU AVR Toolchain as formulae for
 [Homebrew][].
 
 AVR is a popular family of microcontrollers, used for example in the
@@ -14,7 +14,7 @@ Current Versions
 - `binutils 2.24.0`
 - `avr-libc 1.8.1`
 
-Installing homebrew-avr Formula
+Installing homebrew-avr formulae
 --------------------------------
 
 First, just `brew tap WeAreLeka/avr` and then `brew install <formula>`.
